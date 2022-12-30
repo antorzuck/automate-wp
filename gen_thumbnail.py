@@ -26,3 +26,15 @@ def create_thumb(name, text):
     img.save(f"thumbnail/{imgname}.jpg")
     return str(imgname)+'.jpg'
 
+def twt(name, text):
+    api = pixabay.core("31414343-0a8a8b47952dd2e97e7b90a34")
+    search = api.query(text)
+    raname = random.randint(100000,999999)
+    dn = random.randint(1,10)
+    search[dn].download(f"templates/{raname}.jpg", "largeImage")
+
+    img = Image.open(f'templates/{raname}.jpg')
+    imgname = create_name(name)
+    img.thumbnail((640,426))
+    img.save(f"thumbnail/{imgname}.jpg")
+    return str(imgname)+'.jpg'
