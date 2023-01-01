@@ -70,7 +70,9 @@ body = ""
 idofpost = ""
 
 for k in kwlist:
+    print(k)
     draft_url = f"https://quotesholy.com/wp-json/wp/v2/posts?status=draft&search={create_title(k)}"
+    print(draft_url)
  
 
     rtd = requests.get(draft_url, headers=hdrs, auth=auth).json()
@@ -79,6 +81,7 @@ for k in kwlist:
     body += rtd[0]['content']['rendered'] + '\n\n'
     title += rtd[0]['title']['rendered']
     idofpost = rtd[0]['id']
+    print(idofpost)
 
     url = f"https://www.google.com/search?q={title}"
 
@@ -147,7 +150,9 @@ for k in kwlist:
         body = body.replace('”', "")
 
     print("captions collected going to post this shit on wp")
-    create_post(id=idofpost, ttl=title, content=body, thumb=gen_thumbnail.twt(name=title, text=get_image_kw(k)))
+    #create_post(id=idofpost, ttl=title, content=body, thumb=gen_thumbnail.twt(name=title, text=get_image_kw(k)))
+    print(idofpost)
+    print(title)
 
     title = ""
     body = ""
