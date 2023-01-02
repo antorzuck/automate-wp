@@ -32,9 +32,12 @@ def twt(name, text):
     raname = random.randint(100000,999999)
     dn = random.randint(1,10)
     search[dn].download(f"templates/{raname}.jpg", "largeImage")
+    try:
 
-    img = Image.open(f'templates/{raname}.jpg')
-    imgname = create_name(name)
-    img.thumbnail((640,426))
-    img.save(f"thumbnail/{imgname}.jpg")
-    return str(imgname)+'.jpg'
+        img = Image.open(f'templates/{raname}.jpg')
+        imgname = create_name(name)
+        img.thumbnail((640,426))
+        img.save(f"thumbnail/{imgname}.jpg")
+        return str(imgname)+'.jpg'
+    except:
+        print("cant add image to this post. please add it manually")
