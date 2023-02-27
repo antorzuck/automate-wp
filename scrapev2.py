@@ -43,7 +43,6 @@ kw = input("Type keywords: ").split(',')
 for x in kw:
     kwlist.append(x)
 
-print(kwlist)
 
 def get_image_kw(keyword):
     space = keyword.split(' ')
@@ -73,16 +72,13 @@ for k in kwlist:
     try:
         print(k)
         draft_url = f"https://quotesholy.com/wp-json/wp/v2/posts?status=draft&search={create_title(k)}"
-        print(draft_url)
-    
 
         rtd = requests.get(draft_url, headers=hdrs, auth=auth).json()
 
 
         body += rtd[0]['content']['rendered'] + '\n\n'
         title += rtd[0]['title']['rendered']
-        idofpost += rtd[0]['id']
-        print(idofpost)
+        idofpost += str(rtd[0]['id'])
 
         url = f"https://www.google.com/search?q={title}"
 
@@ -110,8 +106,7 @@ for k in kwlist:
                         main_links.append(i[0])
 
         for c,i in enumerate(main_links):
-            if c == scrape_num:
-                break
+    
             res = requests.get(url=i)
             sp = B(res.text, 'html.parser')
             li = sp.find_all('li')
@@ -152,14 +147,15 @@ for k in kwlist:
 
         print("captions collected going to post this shit on wp")
         create_post(id=idofpost, ttl=title, content=body, thumb=gen_thumbnail.twt(name=title, text=get_image_kw(k)))
-        print(idofpost)
-        print(title)
 
         title = ""
         body = ""
         idofpost = ""
         print("posted...")
     except:
+        title = ""
+        body = ""
+        idofpost = ""
         with open('failedkw.txt', 'a+') as f:
             f.writelines(k+',')
         print('posting failed. keyword added to the txt file')
